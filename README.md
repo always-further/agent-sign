@@ -13,7 +13,7 @@
   <a href="#package-publishing">Package Publishing</a> |
   <a href="#inputs">Inputs</a> |
   <a href="#verification">Verification</a> |
-  <a href="https://github.com/always-further/nono">nono CLI</a>
+  <a href="https://github.com/nolabs-ai/nono">nono CLI</a>
 </p>
 
 ---
@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: always-further/agent-sign@v0.0.2
+      - uses: nolabs-ai/agent-sign@v0.0.2
 ```
 
 That's it. This signs all files matching the trust policy's `includes` patterns, commits the `.bundle` sidecars, and verifies the signatures as a smoke test.
@@ -78,7 +78,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: always-further/agent-sign@main
+      - uses: nolabs-ai/agent-sign@main
         with:
           publish: "true"
           package-name: claude-code
@@ -98,7 +98,7 @@ If `files` is omitted in publish mode, the action recursively discovers non-hidd
 
 ## How It Works
 
-1. Installs the [nono CLI](https://github.com/always-further/nono) from GitHub releases
+1. Installs the [nono CLI](https://github.com/nolabs-ai/nono) from GitHub releases
 2. Signs files using `nono trust sign --keyless`
 3. GitHub Actions OIDC provides the identity token automatically
 4. Fulcio issues a short-lived certificate binding the OIDC claims (repository, workflow, ref) to an ephemeral signing key
@@ -119,7 +119,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Upload bundles as workflow artifacts
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     commit: "false"
     upload-artifacts: "true"
@@ -128,7 +128,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Sign specific files together
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     files: "SKILLS.md CLAUDE.md config/settings.json"
 ```
@@ -136,7 +136,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Sign files separately
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     files: "SKILLS.md CLAUDE.md"
     per-file: "true"
@@ -145,7 +145,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Pin a specific nono version
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     version: "v0.6.0-alpha.3"
 ```
@@ -153,7 +153,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Publish a package to a development registry
 
 ```yaml
-- uses: always-further/agent-sign@main
+- uses: nolabs-ai/agent-sign@main
   with:
     publish: "true"
     package-name: claude-code
@@ -166,7 +166,7 @@ By default, all specified files are signed together into a single `.nono-trust.b
 ### Custom trust policy for verification
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     trust-policy: "trust-policy.json"
 ```
@@ -311,7 +311,7 @@ The relevant Fulcio certificate extensions:
 Instruction files often reference companion artifacts (scripts, configs, data files). Use multi-subject signing to attest them together:
 
 ```yaml
-- uses: always-further/agent-sign@v0.0.2
+- uses: nolabs-ai/agent-sign@v0.0.2
   with:
     files: "SKILLS.md lib/helper.py config/settings.json"
 ```

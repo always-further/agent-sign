@@ -107,7 +107,7 @@ runs:
         INPUT_VERSION: ${{ inputs.nono-version }}
       run: |
         if [ "${INPUT_VERSION}" = "latest" ]; then
-          VERSION="$(gh release view --repo always-further/nono --json tagName -q .tagName)"
+          VERSION="$(gh release view --repo nolabs-ai/nono --json tagName -q .tagName)"
           echo "resolved=${VERSION}" >> "${GITHUB_OUTPUT}"
         else
           echo "resolved=${INPUT_VERSION}" >> "${GITHUB_OUTPUT}"
@@ -119,7 +119,7 @@ runs:
         VERSION: ${{ steps.version.outputs.resolved }}
         TARGET: ${{ steps.platform.outputs.target }}
       run: |
-        DOWNLOAD_URL="https://github.com/always-further/nono/releases/download/${VERSION}/nono-${VERSION}-${TARGET}.tar.gz"
+        DOWNLOAD_URL="https://github.com/nolabs-ai/nono/releases/download/${VERSION}/nono-${VERSION}-${TARGET}.tar.gz"
         echo "::group::Installing nono ${VERSION} (${TARGET})"
         echo "Downloading ${DOWNLOAD_URL}"
 
